@@ -18,7 +18,7 @@ var supportThisReleaseButtonsTest = new SplitTest({
   checkStart: function (test) {
     return document.querySelector('.modal--release') != null
   },
-  onStarted: function () {
+  postModifiers: function () {
     var buttons = this.getButtons()
     for(var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function () {
@@ -34,7 +34,7 @@ var homePageViewReleaseButton = new SplitTest({
     var matches = window.location.pathname.match('^\/?$')
     return matches && document.querySelector('.featured-details') != null
   },
-  onStarted: function () {
+  postModifiers: function () {
     document.querySelector('.featured-details .button--cta').addEventListener('click', function () {
       this.convert()
     }.bind(this))
@@ -58,7 +58,7 @@ var musicReleasesVsBrowseTest = new SplitTest({
   checkStart: function () {
     return sixPackSession != null
   },
-  onStarted: function () {
+  postModifiers: function () {
     this.getNavItem().addEventListener('click', function () {
       //If they click on the Music nav item we will count a conversion if they play music from there
       this.recordPlays = true

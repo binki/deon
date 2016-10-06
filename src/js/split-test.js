@@ -4,8 +4,11 @@ function SplitTest (opts) {
   this.alts = []
   this.checkStarterTimeout = null
   this.started = false
-  this.onStart = function () {
+  this.preModifiers = function () {
 
+  }
+  this.postModifiers = function () {
+    
   }
   this.dontCheckStarter = false
 
@@ -62,9 +65,10 @@ SplitTest.prototype.start = function () {
     alt = res.alternative.name
     if(this.modifiers.hasOwnProperty(alt)) {
       window.splittestlog.push('Running alt "' + alt + '"" for "' + this.name + '"')
-      this.modifiers[alt](this)
       this.alt = alt
-      this.onStarted(alt)
+      this.preModifiers(alt)
+      this.modifiers[alt](this)
+      this.postModifiers(alt)
     }
     else {
       throw new Error('No modifier found for alt "'  + alt + '"')

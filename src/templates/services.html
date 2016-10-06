@@ -78,32 +78,90 @@
                 </table>
                 {{/user.isSignedIn}}
                 <div data-set="new-license" class="services-form" trigger-target="subscribeNewLicense">
-                    <select name="vendor">
-                        <option value="">Select Platform</option>
-                        <option value="YouTube">YouTube</option>
-                        <option value="Twitch">Twitch</option>
-                        <option value="Beam">Beam</option>
-                    </select>
-                    <input type="text" name="identity" placeholder="Channel_ID" size="30" />
-                    <button
-                        action="subscribeNewLicense"
-                        trigger="subscribeNewLicense"
-                        data-set-target="new-license">
-                        Subscribe
-                        <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
-                    </button>
-                    <span class="or">or</span>
-                    <button
-                        action="buyoutNewLicense"
-                        data-set-target="new-license">
-                        Buy In Full
-                        <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
-                    </button>
-                    <div class="help-text YouTube hide">http:s//www.youtube.com/channel/<strong>Channel_ID</strong></div>
-                    <div class="help-text Twitch hide">https://www.twitch.tv/<strong>Channel_ID</strong></div>
-                    <div class="help-text Beam hide">https://beam.pro/<strong>Channel_ID</strong></div>
-                    <div class="help-text none hide">&nbsp;</div>
+                    {{#test}}
+                        {{#control}}
+                        <select name="vendor">
+                            <option value="">Select Platform</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Twitch">Twitch</option>
+                            <option value="Beam">Beam</option>
+                        </select>
+                        <input type="text" name="identity" placeholder="Channel_ID" size="30" />
+                        <button
+                            action="subscribeNewLicense"
+                            trigger="subscribeNewLicense"
+                            data-set-target="new-license">
+                            Subscribe
+                            <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
+                        </button>
+                        <span class="or">or</span>
+                        <button
+                            action="buyoutNewLicense"
+                            data-set-target="new-license">
+                            Buy In Full
+                            <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
+                        </button>
+                        <div class="help-text YouTube hide">http:s//www.youtube.com/channel/<strong>Channel_ID</strong></div>
+                        <div class="help-text Twitch hide">https://www.twitch.tv/<strong>Channel_ID</strong></div>
+                        <div class="help-text Beam hide">https://beam.pro/<strong>Channel_ID</strong></div>
+                        <div class="help-text none hide">&nbsp;</div>
+                        {{/control}}
+                        {{#sectioned}}
+                        <div class="form-section">
+                            <h3>Select a Platform</h3>
+                            <button action="selectVendor" vendor="YouTube" type="button" class="select-vendor active">
+                                <input type="radio" name="vendor" value="YouTube" {{#vendors.youtube}}checked{{/vendors.youtube}} />
+                                <span action="selectPlatform" platform="YouTube">
+                                    YouTube
+                                </span>
+                            </button>                      
+                            <button action="selectVendor" vendor="Twitch" type="button" class="select-vendor">
+                                <input type="radio" name="vendor" value="Twitch" {{#vendors.twitch}}checked{{/vendors.twitch}}  />
+                                <span action="selectPlatform" platform="Twitch">
+                                    Twitch
+                                </span>
+                            </button>  
+                            <button action="selectVendor" vendor="Beam" type="button" class="select-vendor">
+                                <input type="radio" name="vendor" value="Beam" {{#vendors.beam}}checked{{/vendors.beam}} />
+                                <span action="selectPlatform" platform="Beam">
+                                    Beam
+                                </span>
+                            </button>  
+                            <div class="help-text price YouTube hide">YouTube license is $10/month or <a href="/account/services/buyout">$200 one time</a> (USD)</div>
+                            <div class="help-text price Twitch hide">Twitch license $5/month or <a href="/account/services/buyout">$100 one time</a> (USD)</div>
+                            <div class="help-text price Beam hide">Beam license is $5/month or <a href="/account/services/buyout">$100 one time</a> (USD)</div>
+                            <div class="help-text none hide">&nbsp;</div>
+                        </div>
+                        <div class="form-section">
+                            <h3>Enter Your Channel</h3>
+                            <input type="text" name="identity" placeholder="Channel_ID" size="30" valid="0" />
+                            <div class="error" role="error" for="identity"></div>
+                            <div class="help-text YouTube hide">https://www.youtube.com/channel/<strong>Channel_ID</strong></div>
+                            <div class="help-text Twitch hide">https://www.twitch.tv/<strong>Channel_ID</strong></div>
+                            <div class="help-text Beam hide">https://beam.pro/<strong>Channel_ID</strong></div>
+                            <div class="help-text none hide">&nbsp;</div>
+                        </div>
+                        <div class="form-section">
+                            <h3>Payment Plan</h3>
+                            <button
+                                action="subscribeNewLicense"
+                                trigger="subscribeNewLicense"
+                                data-set-target="new-license">
+                                Subscribe $10/mo
+                                <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
+                            </button>
+                            <span class="or">or</span>
+                            <button
+                                action="buyoutNewLicense"
+                                data-set-target="new-license">
+                                Pre-pay $200 for 20 months
+                                <span class="working-spinner"><i class="fa fa-spin fa-cog"></i></span>
+                            </button>
+                        </div>
+                        {{/sectioned}}
+                    {{/test}}
                 </div>
+
                 {{#user.isSignedIn}}
                 <br/>
                 <p>Have a YouTube dispute? Release claims <a href="/release-claim">here</a>.</p>

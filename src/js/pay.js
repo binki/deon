@@ -14,6 +14,19 @@ var vendorPrices = {
   }
 }
 
+//These are alias functions, they are pointed to different functions
+//depending on which a/b bucket the user goes into because one uses
+//a dropdown and the other uses radio buttons
+function getVendor () {
+}
+
+function setVendor (vendor) {
+}
+
+function selectVendor (e, el) {
+
+}
+
 function isValidPayMethod (str, obj) {
   if (str != 'stripe' && str != 'paypal') return false
   if (typeof obj[str] != 'function') return false
@@ -38,13 +51,99 @@ function transformBuyOut (obj) {
 }
 
 function transformBuyWhitelist (obj) {
-  obj = transformServices(obj)
+  obj = getUserServicesOpts(obj)
   var qo = searchStringToObject()
   for(var i in qo) {
     obj[i] = qo[i]
   }
   return obj
 }
+
+function getUserServicesOpts (obj) {
+  var user = isSignedIn() ? session.user : {}
+  var opts = {
+    isSignedIn: isSignedIn(),
+    hasGoldPermanent: !!user.goldService && !user.currentGoldSubscription,
+    goldSubscribe: (!user.goldService && !user.currentGoldSubscription) || !isSignedIn(),
+    goldUnsubscribe: (!!user.goldService && !!user.currentGoldSubscription)
+  }
+  if (isLegacyUser()) {
+    opts = {hasLegacy: true}
+  }
+  var obj = {
+    user: opts,
+    qs: encodeURIComponent(window.location.search)
+  }
+  return obj
+}
+
+function transformServices (obj, done) {
+  obj = getUserServicesOpts(obj)
+  var buyLicenseSectioned = new SplitTest({
+    name: 'buy-license-sectioned-form',
+    checkStart: function () {
+      return sixPackSession != null
+    },
+    preModifiers: function () {
+      //Bind the buy buttons to separate KPIs for subscribe and prepay
+      obj.test = {}
+      obj.test[this.alt] = true
+      console.log('test started', obj)
+      done(null, obj)
+    },
+    postModifiers: function () {
+      document.querySelector('button[action=buyoutNewLicense]').addEventListener('click', function () {
+        this.convertKpi('click-buyout')
+      }.bind(this))
+      
+      document.querySelector('button[action=subscribeNewLicense]').addEventListener('click', function () {
+        this.convertKpi('click-subscribe')
+      }.bind(this))
+
+      vendorChanged()
+    },
+    modifiers: {
+      'control': function (_this) {
+        var vendorDropdown = document.querySelector('select[name=vendor]')
+
+        getVendor = function () {
+          return vendorDropdown.value
+        }
+
+        setVendor = function (vendor) {
+          document.vendorDropdown.value = vendor
+        }
+
+        vendorDropdown.addEventListener('change', vendorChanged)
+      },
+      'sectioned' : function (_this) {
+
+        getVendor = function () {
+          return document.querySelector('input[name=vendor]:checked').value
+        }
+
+        selectVendor = function (e, el) {
+          var vendor = el.getAttribute("vendor")
+          setVendor(vendor)
+          e.preventDefault()
+        }
+
+        setVendor = function (vendor) {
+          var radios = document.querySelectorAll('input[name=vendor]')
+          radios.forEach(function (r) {
+            r.checked = r.value == vendor
+          })
+          var buttons = document.querySelectorAll('button[action=selectVendor]')
+          for(var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.toggle('active', buttons[i].matches('.' + vendor))
+          }          
+          vendorChanged()
+        }
+      }
+    }
+  })  
+}
+
 
 function buyWhitelistComplete (obj) {
   var qo = searchStringToObject()
@@ -242,6 +341,18 @@ function resumeLicenseConfirm (e, el) {
   resumeLicenseConfirm[data.method](data)
 }
 
+function vendorChanged () {
+  var vendor = getVendor()
+  if(vendor == "" || vendor == undefined) {
+    vendor = "none"
+  }
+  var els = document.querySelectorAll('.help-text')
+  for(var i = 0; i < els.length; i++) {
+    els[i].classList.toggle('hide', true)
+  }
+  console.log('vendor', vendor)
+  document.querySelector('.help-text.' + vendor).classList.toggle('hide', false)  
+}
 
 function completedServices (source, obj) {
   var vendorSelect = document.querySelector('select[name=vendor]')
@@ -271,18 +382,6 @@ function completedServices (source, obj) {
 
   if(qp.hasOwnProperty('gold')) {
     subscribeGold({}, document.querySelector('[action=subscribeGold]'))
-  }
-
-  var vendorChanged = function () {
-    var vendor = vendorSelect.value
-    if(vendor == "" ) {
-      vendor = "none"
-    }
-    var els = document.querySelectorAll('.help-text')
-    for(var i = 0; i < els.length; i++) {
-      els[i].classList.toggle('hide', true)
-    }
-    document.querySelector('.help-text.' + vendor).classList.toggle('hide', false)
   }
 
   vendorSelect.addEventListener('change', vendorChanged)

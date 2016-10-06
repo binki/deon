@@ -506,23 +506,6 @@ function transformSocialSettings (obj) {
   return obj
 }
 
-function transformServices () {
-  var user = isSignedIn() ? session.user : {}
-  var opts = {
-    isSignedIn: isSignedIn(),
-    hasGoldPermanent: !!user.goldService && !user.currentGoldSubscription,
-    goldSubscribe: (!user.goldService && !user.currentGoldSubscription) || !isSignedIn(),
-    goldUnsubscribe: (!!user.goldService && !!user.currentGoldSubscription)
-  }
-  if (isLegacyUser()) {
-    opts = {hasLegacy: true}
-  }
-  return {
-    user: opts,
-    qs: encodeURIComponent(window.location.search)
-  }
-}
-
 function transformGoldSubscription (obj) {
   var nobj = {
     nextBillingDate: formatDate(obj.availableUntil),
