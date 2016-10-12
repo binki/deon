@@ -100,6 +100,34 @@ function transformServices (obj, done) {
         this.convertKpi('click-subscribe')
       }.bind(this))
 
+      //This was previously in completedServices
+      var qp = queryStringToObject(window.location.search)
+      if(qp.vendor) {
+        var vendor = qp.vendor.toLowerCase()
+        var valid = true
+        if(vendor == 'youtube') {
+          setVendor('YouTube')
+        }
+        else if(vendor == 'twitch') {
+          setVendor('Twitch')
+        }
+        else if(vendor == 'beam') {
+          setVendor('Beam')
+        }
+        else {
+          valid = false
+        }
+
+        if(qp.identity && valid) {
+          document.querySelector('input[name=identity]').value = qp.identity
+          subscribeNewLicense({}, document.querySelector('[action=subscribeNewLicense]'))
+        }
+      }
+
+      if(qp.hasOwnProperty('gold')) {
+        subscribeGold({}, document.querySelector('[action=subscribeGold]'))
+      }
+
       vendorChanged()
     },
     modifiers: {
@@ -112,12 +140,12 @@ function transformServices (obj, done) {
 
         setVendor = function (vendor) {
           document.vendorDropdown.value = vendor
+          vendorChanged()
         }
 
         vendorDropdown.addEventListener('change', vendorChanged)
       },
       'sectioned' : function (_this) {
-
         getVendor = function () {
           return document.querySelector('input[name=vendor]:checked').value
         }
@@ -355,37 +383,6 @@ function vendorChanged () {
 }
 
 function completedServices (source, obj) {
-  var vendorSelect = document.querySelector('select[name=vendor]')
-  if (!vendorSelect) return
-  var qp = queryStringToObject(window.location.search)
-  if(qp.vendor) {
-    var vendor = qp.vendor.toLowerCase()
-    var valid = true
-    if(vendor == 'youtube') {
-      vendorSelect.value = 'YouTube'
-    }
-    else if(vendor == 'twitch') {
-      vendorSelect.value = 'Twitch'
-    }
-    else if(vendor == 'beam') {
-      vendorSelect.value = 'Beam'
-    }
-    else {
-      valid = false
-    }
-
-    if(qp.identity && valid) {
-      document.querySelector('input[name=identity]').value = qp.identity
-      subscribeNewLicense({}, document.querySelector('[action=subscribeNewLicense]'))
-    }
-  }
-
-  if(qp.hasOwnProperty('gold')) {
-    subscribeGold({}, document.querySelector('[action=subscribeGold]'))
-  }
-
-  vendorSelect.addEventListener('change', vendorChanged)
-  vendorChanged()
 }
 
 resumeLicenseConfirm.paypal = function resumeLicenseConfirmPayPal (data) {
