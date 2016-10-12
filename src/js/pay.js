@@ -371,18 +371,14 @@ function resumeLicenseConfirm (e, el) {
 
 function vendorChanged () {
   var vendor = getVendor()
-  if(vendor == "" || vendor == undefined) {
+  if(!vendor) {
     vendor = "none"
   }
   var els = document.querySelectorAll('.help-text')
   for(var i = 0; i < els.length; i++) {
     els[i].classList.toggle('hide', true)
   }
-  console.log('vendor', vendor)
   document.querySelector('.help-text.' + vendor).classList.toggle('hide', false)  
-}
-
-function completedServices (source, obj) {
 }
 
 resumeLicenseConfirm.paypal = function resumeLicenseConfirmPayPal (data) {
