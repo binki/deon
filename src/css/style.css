@@ -2776,9 +2776,9 @@ textarea.copycredits {
   color: #666;
 }
 
-.help-text.Beam strong,
-.help-text.Twitch strong,
-.help-text.YouTube strong {
+.help-text strong,
+.help-text strong,
+.help-text strong {
   color: #000;
   font-size: 1.1em;
 }
@@ -2802,13 +2802,54 @@ textarea.copycredits {
   margin-bottom: 10px;
 }
 
-button.select-vendor.active {
-  background: dodgerblue;
+button.select-vendor input {
+  display: none;
+}
+
+button.select-vendor input[type=radio] + span:before {
+  display: none;
+}
+
+button.select-vendor.active.YouTube,
+button.select-vendor.YouTube:hover {
+  background: #bb0000;
+  border-color: #bb0000;
+  color: #fff;
+}
+button.select-vendor.active.Beam,
+button.select-vendor.Beam:hover {
+  background: #536dfe;
+  border-color: #536dfe;
+  color: #fff;
+}
+button.select-vendor.active.Twitch,
+button.select-vendor.Twitch:hover {
+  background: #6441A5;
+  border-color: #6441A5;
   color: #fff;
 }
 
-button.select-vendor span:before {
-  box-shadow-color: dodgerblue;
+.vendor-help .YouTube,
+.vendor-help .Beam,
+.vendor-help .none,
+.vendor-help .Twitch {
+  display: none;
+}
+
+.vendor-help.YouTube .YouTube {
+  display: inherit;
+}
+
+.vendor-help.Beam .Beam {
+  display: inherit;
+}
+
+.vendor-help.Twitch .Twitch {
+  display: inherit;
+}
+
+.vendor-help.none .none {
+  display: inherit;
 }
 
 
