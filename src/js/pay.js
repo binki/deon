@@ -287,7 +287,7 @@ function convertIdentityAndValidateLicense (identity, vendor, callback) {
     })
   }
   else {
-    validateLicense(channelid, vendor, callback)
+    validateLicense(identity, vendor, callback)
   }
 }
 
