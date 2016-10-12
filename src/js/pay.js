@@ -127,6 +127,7 @@ function transformServices (obj, done) {
         subscribeGold({}, document.querySelector('[action=subscribeGold]'))
       }
 
+      bindIdentityBlur()
       vendorChanged()
     },
     modifiers: {
