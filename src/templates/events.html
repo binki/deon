@@ -1,0 +1,139 @@
+<script type="text/template"
+        route="^events\/?$"
+        page-title="Events">
+    <div source="$endpoint/catalog/news" template="events-featured"></div>
+    <div source="$endpoint/catalog/news" template="events-upcoming"></div>
+    <div source="$endpoint/catalog/news" template="events-latest"></div>
+</script>
+
+<script type="text/template"
+        template-name="events-featured"
+        transform="transformFeaturedEvent">
+    {{#loading}}
+    {{>loading-view-black}}
+    {{/loading}}
+    {{#error}}
+    <p>{{message}}</p>
+    {{/error}}
+    {{#data}}
+    <div class="top-banner">
+      <div class="banner">
+            <div class="banner" style="background-image:url({{cover}}">
+                <div class="banner-shade"></div>
+            </div>
+        </div>
+      <div class="container flex">
+        <div class="col-xs-12 col-sm-12 col-md-offset-6 col-lg-offset-6 cl-white featured-details">
+          {{#upcoming}}<span class="tag">Upcoming Event</span>{{/upcoming}}
+          {{^upcoming}}<span class="tag">Latest Event</span>{{/upcoming}}
+          <a class="silent no-hover" href="/events/{{id}}">
+              <h1 class="title uppercase">{{title}}</h1>
+          </a>
+          <h3>
+            <span class="place">@ {{location}}.</span>
+            {{city}}.
+          </h3>
+          <p class="date">
+            {{dateString}}. {{date.hours}}:{{date.minutes}} UTC
+          </p>
+          {{#upcoming}}
+            <button class="button button--cta button--icon" action="buyTickets">Buy tickets</button>
+          {{/upcoming}}
+          {{^upcoming}}
+            <a class="button button--cta" href="/events/{{id}}">View</a>
+          {{/upcoming}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/data}}
+</script>
+
+<script type="text/template"
+        template-name="events-upcoming"
+        transform="transformUpcomingEvents">
+  {{#loading}}
+  {{>loading-view}}
+  {{/loading}}
+  {{#error}}
+  <p>{{message}}</p>
+  {{/error}}
+  {{#data}}
+  <section class="v-padding">
+    <div class="container latest">
+      <header class="flex top-cta">
+        <div class="col-xs-12 col-sm-6">
+            <h2 class="line-top">Upcoming Events</h2>
+        </div>
+        <div class="col-xs-12 col-sm-6 text right toggle-wrapper">
+            <span class="toggle-label">All Events</span>
+            <div class="toggle">
+              <input type="checkbox" role="upcoming-toggle" action="toggleUpcoming" class="check">
+              <span class="switch"></span>
+              <span class="track"></span>
+            </div>
+            <span class="toggle-label">Monstercat</span>
+        </div>
+      </header>
+      <table class="events" role="upcoming-table">
+      {{#events}}
+      <tr {{#monstercat}}class="monstercat"{{/monstercat}}>
+        <td class="date">
+          <span class="month">{{date.month}}</span>
+          <span class="day">{{date.day}}</span>
+        </td>
+        <td class="title">
+          <span class="name">{{title}}</span>
+          <span class="time">{{date.weekday}} {{date.hours}}:{{date.minutes}} UTC</span>
+        </td>
+        <td class="location">
+          <span class="place">@ {{location}}.</span>
+          <span class="city">{{city}}</span>
+        </td>
+      </tr>
+      {{/events}}
+      </table>
+    </div>
+  </section>
+  {{/data}}
+</script>
+
+<script type="text/template"
+        template-name="events-latest"
+        transform="transformPastEvents">
+  {{#loading}}
+  {{>loading-view}}
+  {{/loading}}
+  {{#error}}
+  <p>{{message}}</p>
+  {{/error}}
+  {{#data}}
+  <section class="v-padding">
+    <div class="container latest">
+      <header class="flex top-cta">
+        <div class="col-xs-12">
+            <h2 class="line-top">Past Events</h2>
+        </div>
+      </header>
+      <ul class="art-list art-list--full-width artist-list event-list">
+      {{#events}}
+      <li>
+        <a class="silent" href="/artist/{{uri}}" title="{{name}}">
+            {{#cover}}
+            <div class="image-wrapper">
+                <img src="/img/artist.jpg" class="preload" />
+                <img src="{{cover}}"/>
+            </div>
+            {{/cover}}
+            <div class="hover-wrapper">
+                <label class="title one-line-ellipsis">{{title}}</label>
+                <label class="city one-line-ellipsis">{{city}}</label>
+            </div>
+        </a>
+        </li>
+      {{/events}}
+      </ul>
+    </div>
+  </section>
+  {{/data}}
+</script>
