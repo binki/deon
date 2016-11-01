@@ -4,6 +4,22 @@
     <div source="$endpoint/catalog/news" template="events-featured"></div>
     <div source="$endpoint/catalog/news" template="events-upcoming"></div>
     <div source="$endpoint/catalog/news" template="events-latest"></div>
+
+    <section class="v-padding">
+      <div class="container latest">
+        <header class="flex top-cta">
+          <div class="col-xs-12">
+              <h2 class="line-top">Sponsorship</h2>
+          </div>
+        </header> 
+        <div>
+          <p>
+            Want to partner with us? 
+            Contact our <a href="mailto:sponsor@monstercat.com">Sales Agent</a>
+          </p>
+        </div>
+      </div>
+    </section>
 </script>
 
 <script type="text/template"
@@ -115,10 +131,10 @@
             <h2 class="line-top">Past Events</h2>
         </div>
       </header>
-      <ul class="art-list art-list--full-width artist-list event-list">
+      <ul class="art-list artist-list event-list">
       {{#events}}
       <li>
-        <a class="silent" href="/artist/{{uri}}" title="{{name}}">
+        <a class="silent" href="/event/{{uri}}" title="{{name}}">
             {{#cover}}
             <div class="image-wrapper">
                 <img src="/img/artist.jpg" class="preload" />

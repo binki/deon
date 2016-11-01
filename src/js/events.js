@@ -50,38 +50,81 @@ function mockAPIEvents(obj){
   obj = obj || {}
   obj.events = []
   obj.events.push({
-    'title' : "ADE 2016",
-    'location' : "De Balie",
-    'city': "Amsterdam, NE", 
-    'date' : "2016-11-20T20:30:00",
+    'title' : "New Year's Party 2017",
+    'location' : "Placeholder",
+    'city': "London, UK", 
+    'date' : "2016-12-31T22:30:00",
     'monstercat': true
   })
   obj.events.push({
-    'title' : "Karma Fields Live The Hex",
+    'title' : "Christmas Party 2017",
+    'location' : "Ice Bar",
+    'city': "Alaska, USA", 
+    'date' : "2016-12-24T22:30:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "Karma Fields Live | The Hex",
     'location' : "LOT 613",
     'city': "Los Angeles. USA", 
     'date' : "2016-11-04T20:30:00",
     'monstercat': false
   })
+
   obj.events.push({
-    'title' : "FVDED 2016 Pre-Party",
+    'title' : "ADE 2016",
+    'location' : "De Balie",
+    'city': "Amsterdam, NE", 
+    'date' : "2016-10-20T22:00:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "Fvded 2016 Pre-Party",
     'location' : "Celebrities",
     'city': "Vancouver, CA", 
-    'date' : "2016-11-30T20:30:00",
+    'date' : "2016-06-30T22:00:00",
     'monstercat': true
   })
   obj.events.push({
-    'title' : "AFK DreamHack 2016",
-    'location' : "Empire Control room",
+    'title' : "AFK Launch DreamHack 2016",
+    'location' : "Empire Control Room",
     'city': "Austin, USA", 
-    'date' : "2016-12-05T20:30:00",
+    'date' : "2016-05-05T20:00:00",
     'monstercat': true
   })
   obj.events.push({
-    'title' : "Seasons 2016",
-    'location' : "Empire Control room",
+    'title' : "Monstercat Showcase 2016",
+    'location' : "Celebrities",
+    'city': "Vancouver, CA", 
+    'date' : "2016-03-24T21:00:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "Twitchcon 2015",
+    'location' : "DNA Lounge",
+    'city': "San Francisco, USA", 
+    'date' : "2015-09-24T19:00:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "Digital Dreams 2015",
+    'location' : "Tattoo",
+    'city': "Toronto, CA", 
+    'date' : "2015-06-27T22:00:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "Paradiso 2015",
+    'location' : "Foundation",
+    'city': "Seattle, USA", 
+    'date' : "2015-06-24T21:00:00",
+    'monstercat': true
+  })
+  obj.events.push({
+    'title' : "SXSW 2015",
+    'location' : "Empire Control Room",
     'city': "Austin, USA", 
-    'date' : "2016-05-05T20:30:00",
+    'date' : "2015-03-19T20:00:00",
     'monstercat': true
   })
 }

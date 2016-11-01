@@ -3501,6 +3501,12 @@ span.place {
   display: block;
   font-weight: bold;
 }
+
+.event-list label.city {
+  color: #ccc;
+  font-size: .85rem;
+}
+
 @media screen and (min-width: 992px){
   .art-list.event-list > li{
     width: 33.3%;
