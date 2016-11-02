@@ -29,7 +29,9 @@
     {{>loading-view-black}}
     {{/loading}}
     {{#error}}
-    <p>{{message}}</p>
+    <div class="container panel">
+      <p>{{message}}</p>
+    </div>
     {{/error}}
     {{#data}}
     <div class="top-banner">
@@ -72,7 +74,9 @@
   {{>loading-view}}
   {{/loading}}
   {{#error}}
-  <p>{{message}}</p>
+  <div class="container panel">
+    <p>{{message}}</p>
+  </div>
   {{/error}}
   {{#data}}
   <section class="v-padding">
@@ -121,7 +125,9 @@
   {{>loading-view}}
   {{/loading}}
   {{#error}}
-  <p>{{message}}</p>
+  <div class="container panel">
+    <p>{{message}}</p>
+  </div>
   {{/error}}
   {{#data}}
   <section class="v-padding">

@@ -50,7 +50,7 @@ function mockAPIEvents(obj){
   obj = obj || {}
   obj.events = []
   obj.events.push({
-    'title' : "New Year's Party 2017",
+    'title' : "New Year's 2017",
     'location' : "Placeholder",
     'city': "London, UK", 
     'date' : "2016-12-31T22:30:00",
