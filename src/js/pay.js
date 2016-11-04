@@ -252,6 +252,7 @@ function cancelLicenseSubscription (e, el) {
 function resumeLicenseSubscription (e, el) {
   var data = getTargetDataSet(el)
   openModal('resume-whitelist', data)
+  bindPayPalGermanyWarning()
 }
 
 function resumeLicenseConfirm (e, el) {
@@ -265,15 +266,19 @@ function resumeLicenseConfirm (e, el) {
 }
 
 function getSelectedVendor () {
-  return document.querySelector('select[name=vendor]').value
+  var sel = document.querySelector('select[name=vendor]')
+  return sel ? sel.value : "none"
 }
 
 function bindIdentityBlur () {
-  document.querySelector('input[name=identity]').addEventListener('blur', function () {
-    var vendor = getSelectedVendor()
-    var val = serviceUrlToChannelId(this.value)
-    this.value = val
-  })
+  var id = document.querySelector('input[name=identity]')
+  if(id) {
+    id.addEventListener('blur', function () {
+      var vendor = getSelectedVendor()
+      var val = serviceUrlToChannelId(this.value)
+      this.value = val
+    })
+  }
 }
 
 function completedServices (source, obj) {
@@ -309,6 +314,7 @@ function completedServices (source, obj) {
   bindIdentityBlur()
   vendorSelect.addEventListener('change', vendorChanged)
   vendorChanged()
+  bindPayPalGermanyWarning()
 }
 
 
@@ -515,7 +521,8 @@ function subscribeGold (e, el) {
     el.classList.add('working')
     el.disabled = true
     return requestJSON({
-      url: endpoint + "/services/gold/code/" + data.trialCode
+      url: endpoint + "/self/services/gold/code/" + data.trialCode,
+      withCredentials: true
     }, function (err, obj, xhr) {
       el.classList.remove('working')
       el.disabled = false
@@ -594,4 +601,22 @@ function scrollToCheckout () {
   setTimeout(function () {
     scrollToAnimated(document.querySelector('#new-subscriptions'))
   }, 500)
+}
+
+function bindPayPalGermanyWarning () {
+  var radios = document.querySelectorAll('input[name=method]')
+  for(var i = 0; i < radios.length; i++) {
+    radios[i].addEventListener('change', togglePayPalGermanyWarning)
+  }
+  togglePayPalGermanyWarning()
+}
+
+function togglePayPalGermanyWarning () {
+  if(session.user && session.user.location == 'Germany') {
+    var val = document.querySelector('input[name=method]:checked').value
+    var msg = document.querySelector('.recurring-warning-germany')
+    if(msg) {
+      msg.classList.toggle('hide', val != 'paypal')
+    }
+  }
 }
