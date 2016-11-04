@@ -10,6 +10,7 @@ var sixPackSession  = null
 preLoadImage('/img/artwork.jpg')
 preLoadImage('/img/artwork-merch.jpg')
 preLoadImage('/img/artist.jpg')
+preLoadImage('/img/event.jpg')
 
 document.addEventListener("DOMContentLoaded", function (e) {
   initSocials()

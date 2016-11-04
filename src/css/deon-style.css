@@ -849,6 +849,9 @@ td.push-right > * {
   position: absolute;
   background: rgba(0,0,0,0.5);
 }
+.light-banner-shade{
+  background: rgba(255,255,255,0.85);
+}
 .gradient{
   background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
 }
@@ -3532,6 +3535,10 @@ blockquote code {
   EVENTS
 \*-----------------------------*/
 
+.top-banner-events > .flex{
+  padding: 8rem 0;
+}
+
 table.events tr{
   transition: opacity 0.4s ease, transform 0.6s ease;
 }
@@ -3557,6 +3564,16 @@ td.date > .day {
   color: dodgerblue;
 }
 
+.footer-cta{
+  padding: 4rem 0;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.footer-cta h2{
+  margin-bottom: 1rem;
+}
+
 td.title > .name {
   font-weight: bold;
   font-size: 1.2rem;
@@ -3577,13 +3594,24 @@ span.place {
   color: #ccc;
   font-size: .85rem;
 }
-
+.art-list--full-width.event-list li{
+  padding-bottom: 1%;
+}
 @media screen and (min-width: 992px){
   .art-list.event-list > li{
     width: 33.3%;
   }
+  .event-list li a .hover-wrapper {
+    background: rgba(0,0,0,0.5);
+  }
+  .event-list li a .image-wrapper{
+    transform: perspective(1px) scale(1.1);
+  }
+  .event-list li a:hover .image-wrapper{
+    transform: perspective(1px) scale(1.25);
+  }
 }
-@media screen and (min-width: 2000px){
+@media screen and (min-width: 1200px){
   .art-list.event-list > li{
     width: 25%;
   }
