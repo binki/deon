@@ -1,28 +1,109 @@
 <script type="text/template"
-        route="^events\/?$"
-        page-title="Events">
-    <div source="$endpoint/catalog/news" template="events-featured"></div>
-    <div source="$endpoint/catalog/news" template="events-upcoming"></div>
-    <div source="$endpoint/catalog/news" template="events-latest"></div>
+        route="^event\/(.*)"
+        page-title="Event"
+        transform="transformEvent"
+        source="$endpoint/catalog/news">
+    {{#loading}}
+    {{>loading-view}}
+    {{/loading}}
+    {{#error}}
+    <div class="container panel">
+        <p>{{message}}</p>
+    </div>
+    {{/error}}
+    {{#data}}
 
-    <div class="footer-cta">
-      <div class="banner" style="background-image:url(/img/banner.jpg)">
-          <div class="banner-shade light-banner-shade"></div>
+    <div source="$endpoint/catalog/news" template="event-header"></div>
+
+    {{#videoId}}
+    <div class="event-video">
+      <div class="banner banner--scaled" style="background-image:url('https://img.youtube.com/vi/{{videoId}}/maxresdefault.jpg')">
+          <div class="banner-shade"></div>
       </div>
-      <div class="container text center">
-        <div class="button-group-center">
-          <h2>Sponsorship.</h2>
-          <p>
-            Want to partner with us? 
-            Contact our <a href="mailto:sponsor@monstercat.com">Sales Agent</a>
-          </p>
+      <div class="container">
+        <div class="embed-container">
+          <iframe src='https://www.youtube.com/embed/{{videoId}}' frameborder='0' allowfullscreen></iframe>
         </div>
       </div>
     </div>
+    {{/videoId}}
+
+    <div class="event-body">
+      <article class="flex">
+        <div class="col-xs-12 col-sm-12 col-md-6 article-banner">
+            <div class="carousel">
+              <div class="carousel-inner" role="carousel">
+                {{#carousel}}
+                <div class="item {{#isFirst}}active{{/isFirst}}">
+                  <div style="background-image: url({{image}})"></div>
+                </div>
+                {{/carousel}}
+              </div>
+              <div class="carousel-control left" action="previousItem">
+                <div class="arrow left"></div>
+              </div>
+              <div class="carousel-control right" action="nextItem">
+                <div class="arrow right"></div>
+              </div>
+              <ol class="carousel-indicators" role="carousel-dots">
+                {{#carousel}}
+                <li {{#isFirst}}class="active"{{/isFirst}}></li>
+                {{/carousel}}
+              </ol>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 article-details">
+            <div class="article-wrapper">
+              <h2>About the event</h2>
+              <p class="description">{{description}}</p>
+            </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="event-gallery">
+      <ul class="picture-gallery clearfix">
+        {{#gallery}}
+          <li style="background-image: url({{src}});" action="openGalleryModal" big-src="{{bigSrc}}"></li>
+        {{/gallery}}
+      </ul>
+    </div>
+
+    {{>event-sponsor}}
+
+    {{/data}}
 </script>
 
 <script type="text/template"
-        template-name="events-featured"
+        mustache-name="event-sponsor">
+  <div class="footer-cta">
+    <div class="banner" style="background-image:url(/img/banner.jpg)">
+        <div class="banner-shade light-banner-shade"></div>
+    </div>
+    <div class="container text center">
+      <div class="button-group-center">
+        <h2>Sponsorship.</h2>
+        <p>
+          Want to partner with us? 
+          Contact our <a href="mailto:sponsor@monstercat.com">Sales Agent</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template"
+        route="^events\/?$"
+        page-title="Events">
+    <div source="$endpoint/catalog/news" template="event-header"></div>
+    <div source="$endpoint/catalog/news" template="events-upcoming"></div>
+    <div source="$endpoint/catalog/news" template="events-latest"></div>
+    {{>event-sponsor}}
+    
+</script>
+
+<script type="text/template"
+        template-name="event-header"
         transform="transformFeaturedEvent">
     {{#loading}}
     {{>loading-view-black}}
@@ -43,7 +124,7 @@
         <div class="col-xs-12 col-sm-12 col-md-offset-6 col-lg-offset-6 cl-white featured-details">
           {{#upcoming}}<span class="tag">Upcoming Event</span>{{/upcoming}}
           {{^upcoming}}<span class="tag">Latest Event</span>{{/upcoming}}
-          <a class="silent no-hover" href="/events/{{id}}">
+          <a class="silent no-hover" href="/event/{{id}}">
               <h1 class="title uppercase">{{title}}</h1>
           </a>
           <h3>
@@ -57,7 +138,7 @@
             <button class="button button--cta button--icon" action="buyTickets">Buy tickets</button>
           {{/upcoming}}
           {{^upcoming}}
-            <a class="button button--cta" href="/events/{{id}}">View</a>
+            <a class="button button--cta" href="/event/{{id}}">View</a>
           {{/upcoming}}
           </div>
         </div>
@@ -102,7 +183,9 @@
           <span class="day">{{date.day}}</span>
         </td>
         <td class="title">
-          <span class="name">{{title}}</span>
+          <span class="name">
+            <a class="silent no-hover" href="/event/{{id}}">{{title}}</a>
+          </span>
           <span class="time">{{date.weekday}} {{date.hours}}:{{date.minutes}} UTC</span>
         </td>
         <td class="location">
@@ -129,7 +212,7 @@
   </div>
   {{/error}}
   {{#data}}
-  <section class="v-padding">
+  <section class="v-padding past-events">
     <div class="container latest">
       <header class="flex top-cta">
         <div class="col-xs-12">
@@ -139,7 +222,7 @@
       <ul class="art-list art-list--full-width artist-list event-list">
       {{#events}}
       <li>
-        <a class="silent" href="/event/{{uri}}" title="{{name}}">
+        <a class="silent" href="/event/{{id}}" title="{{name}}">
             {{#cover}}
             <div class="image-wrapper">
                 <img src="/img/event.jpg" class="preload" />
