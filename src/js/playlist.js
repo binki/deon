@@ -389,6 +389,10 @@ function playlistDrop (e) {
   var releaseId = e.dataTransfer.getData('releaseId')
   var droppedTr = e.target.closest('[role="playlist-track"]')
   var draggedTr = document.querySelector('tr[role="playlist-track"][track-id="' + trackId + '"][release-id="' + releaseId + '"]')
+  if(draggedTr == null) {
+    console.warning('Dragged TR is blank.')
+    return
+  }
   draggedTr.classList.remove('drag-dragging')
   var draggedIndex = e.dataTransfer.getData('childIndex')
   var droppedIndex = getChildIndex(droppedTr)
