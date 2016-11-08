@@ -5,7 +5,7 @@ function transformMixContest(obj){
 }
 
 function transformMixContestPoll(obj){
-  obj.audioLink = 'http://nicolasjaar.net/works/mixes/BBC%20-%20Essential%20Mix.mp3'
+  obj.audioLink = 'https://s3.amazonaws.com/data.monstercat.com/blobs/5de6ba60600e3f20feefd4bd1e60893bdb742a36'
   obj.tournamentImage = '/img/tournament-1.jpg'
   obj.endDate = new Date('2016-11-12T00:00:00') // UTC = PST + 8
   obj.cover = "/img/mixcontest.jpg" 
@@ -26,7 +26,7 @@ function createVote (e, el) {
     return toasty(Error('You need to <a href="/signin">sign in</a> to vote (it\'s free).'), 3000)
 
   var data = getTargetDataSet(el)
-  if (!data || !data.pollId)
+  if (!data || !data.pollId)
     return toasty(Error('There was an error. Please try again later.'))
   if (!data["choices[]"])
     return toasty(Error('You need to select at least an option.'))
