@@ -352,6 +352,9 @@ function loadSource (opts) {
 }
 
 function loadSubSources (container, reset, disableLoadingRender) {
+  if(!container) {
+    return
+  }
   var sources = container.querySelectorAll('[source]')
   for (var i = 0; i < sources.length; i++) {
     var opts = getElementSourceOptions(sources[i])
