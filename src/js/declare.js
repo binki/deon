@@ -409,6 +409,9 @@ function renderTemplateOptions (opts) {
 }
 
 function render (container, template, scope) {
+  if(!container) {
+    return
+  }
   container.innerHTML = Mustache.render(template, scope, mustacheTemplates)
   loadSubSources(container)
 }
