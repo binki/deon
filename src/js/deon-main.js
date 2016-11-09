@@ -52,7 +52,9 @@ openRoute.completed.push(function () {
   if (location.pathname == "/") getStats()
 })
 openRoute.started.push(function () {
-  stopCountdownTicks()
+  if(typeof(stopCountdownTicks) == 'function') {
+    stopCountdownTicks()
+  }
 })
 
 requestDetect.credentialDomains.push(endhost)
