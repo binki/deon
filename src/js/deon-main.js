@@ -826,6 +826,9 @@ function completedRelease (source, obj) {
 }
 
 function completedReleaseTracks (source, obj) {
+  if(!obj) {
+    return
+  }
   appendSongMetaData(obj.data.results)
   var artists = [];
   getArtistsAtlas(obj.data.results, function (err, atlas) {
