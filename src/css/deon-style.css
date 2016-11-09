@@ -575,6 +575,12 @@ label[for] {
   .modal--licensing > .panel {
     padding: 1em;
   }
+
+  div.modal--licensing {
+    max-height: 90%;
+    margin: 5% auto;
+    overflow: auto;
+  }
 }
 
 /*-----------------------------*\
@@ -1663,8 +1669,6 @@ span.note a {
   max-width: 1000px;
   position: relative;
   margin: 50px auto;
-  max-height: 90%;
-  overflow: auto;
 }
 
 .modal > .panel:first-of-type {
