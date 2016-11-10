@@ -5,7 +5,7 @@ function transformMixContest(obj){
 }
 
 function transformMixContestPoll(obj){
-  obj.audioLink = 'https://s3.amazonaws.com/data.monstercat.com/blobs/5de6ba60600e3f20feefd4bd1e60893bdb742a36'
+  obj.audioLink = 'https://connect.monstercat.com/api/release/5822296505c273e131e967c4/download?format=mp3&bitRate=128&method=download&track=5822220805c273e131e964f0'
   obj.tournamentImage = '/img/tournament-1.jpg'
   obj.endDate = new Date('2016-11-12T00:00:00') // UTC = PST + 8
   obj.cover = "/img/mixcontest.jpg" 
@@ -28,8 +28,6 @@ function createVote (e, el) {
   var data = getTargetDataSet(el)
   if (!data || !data.pollId)
     return toasty(Error('There was an error. Please try again later.'))
-  if (!data["choices[]"])
-    return toasty(Error('You need to select at least an option.'))
   choices = []
   for (var i = 0; i<data["choices[]"].length; i++){
     var value = data["choices[]"][i]
@@ -38,9 +36,13 @@ function createVote (e, el) {
       choices.push(index)
     }
   }
-  var maxVotes = 2;
-  if (choices.length > maxVotes) 
-    return toasty(Error('You may only select up to ' + maxVotes + ' choices.'))
+  var maxChoices = parseInt(data.maxChoices);
+  var minChoices = parseInt(data.minChoices);
+  if (choices.length > maxChoices)
+    return toasty(Error('You may only select up to ' + maxChoices + ' choices.'))
+
+  if(choices.length < minChoices)
+    return toasty(Error('You need to select at least ' + minChoices + ' choices.'))
 
   requestJSON({
     url: endpoint + '/vote',
