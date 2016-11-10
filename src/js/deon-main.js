@@ -412,6 +412,9 @@ function removeYouTubeClaim (e, el) {
  */
 
 function mapReleaseTrack (o, index) {
+  if(!o) {
+    return {}
+  }
   o.trackNumber = index + 1
   o.index       = index
   o.canPlaylist = isSignedIn() && !o.inEarlyAccess ? { _id: o._id } : null
