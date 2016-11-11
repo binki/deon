@@ -1,4 +1,58 @@
 <script type="text/template"
+        route="^[Mm]ix[Cc]ontest2016\/votes"
+        page-title="Mix Contest 2016 Votes"
+        transform="transformMixContest">
+  {{#loading}}
+  {{>loading-view}}
+  {{/loading}}
+  {{#error}}
+  <div class="container panel">
+      <p>{{message}}</p>
+  </div>
+  {{/error}}
+  {{#data}}
+  {{#pollId}}
+  <div source="$endpoint/poll/{{pollId}}/votes/breakdown" template="vote-breakdown"></div>
+  {{/pollId}}
+  {{/data}}
+</script>
+
+<script type="text/template"
+        template-name="vote-breakdown"
+        transform="transformVotesBreakdown"
+        completed="completedHome">
+  {{#loading}}
+  {{>loading-view}}
+  {{/loading}}
+  {{#error}}
+  <div class="container panel">
+      <p>{{message}}</p>
+  </div>
+  {{/error}}
+  {{#data}}
+  <div class="container">
+    <div class="panel">
+        <table>
+          <thead>
+          <tr>
+            <th>Votes</th>
+          </tr>
+          </thead>
+          <tbody>
+            {{#votes}}
+            <tr>
+              <td>{{.}}</td>
+            </tr>
+            {{/votes}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {{/data}}
+</script>
+
+<script type="text/template"
         route="^[Mm]ix[Cc]ontest2016\/?$"
         page-title="Mix Contest 2016"
         transform="transformMixContest">
