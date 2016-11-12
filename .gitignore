@@ -4,3 +4,7 @@ node_modules
 .arcconfig
 bin
 cache/*
+# Common suffix for file backups by unix-like editors.
+*~
+# Emacs swap files
+*\#*
