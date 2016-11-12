@@ -14,9 +14,10 @@
         </div>
         {{/buying}}        
         <div class="flex sign-split">
+            <form onsubmit="false" data-set-target="credentials" data-set="credentials" data-submit-action="signIn">
             <div class="col-xs-12 col-md-6 panel">
                 <h2>With Email</h2>
-                <table class="form mobile" data-set="credentials" trigger-target="signIn">
+                <table class="form mobile">
                     <tbody>
                         <tr>
                             <th>Email</th>
@@ -37,7 +38,8 @@
                                 <button
                                     class="faux password"
                                     action="togglePassword"
-                                    toggle-target="password">
+                                    toggle-target="password"
+                                    type="button">
                                     <i class="fa fa-eye-slash"></i>
                                 </button>
                             </td>
@@ -45,12 +47,13 @@
                     </tbody>
                 </table>
                 <div class="button-group button-group--margin">
-                    <button class="button--cta button--full" action="signIn" trigger="signIn" data-set-target="credentials">Sign In</button>
+                    <button class="button--cta button--full">Sign In</button>
                 </div>
                 <a href="/forgot-password">Forgot your password?</a>
                 <br/>
                 <a href="/sign-up?redirect={{redirectTo}}">Don't have an account? Sign up!</a>
             </div>
+            </form>
             <div class="col-xs-12 col-md-6 panel">
                 <h2>With Social</h2>
                 <div class="button-group button-group--margin">
