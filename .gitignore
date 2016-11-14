@@ -8,3 +8,6 @@ cache/*
 *~
 # Emacs swap files
 *\#*
+# Vim swap files (http://stackoverflow.com/a/4824199)
+*.swp
+*.swo
