@@ -1,6 +1,6 @@
 function transformMixContest(obj){
   obj = obj || {}
-  obj.pollId = '5820db412b27002175be50ff'
+  obj.pollId = '583da64d6f9ca7645de50686'
   return obj
 }
 function transformVotesBreakdown(obj){
@@ -10,10 +10,12 @@ function transformVotesBreakdown(obj){
   return obj
 }
 function transformMixContestPoll(obj){
-  obj.audioLink = 'https://connect.monstercat.com/api/release/5822296505c273e131e967c4/download?format=mp3&bitRate=128&method=download&track=5822220805c273e131e964f0'
-  obj.tournamentImage = '/img/tournament-1.jpg'
-  obj.endDate = new Date('2016-11-12T00:00:00') // UTC = PST + 8
-  obj.votingOpen = obj.endDate > new Date()
+  obj.audioLink = 'https://s3.amazonaws.com/data.monstercat.com/blobs/03340e4c2363321ba93214c9e7d3326ac33b1683'
+  obj.tournamentImage = '/img/tournament-3.jpg'
+  obj.startDate = new Date('2016-11-29T22:00:00') // UTC = PST + 8
+  obj.endDate = new Date('2016-12-03T02:00:00') // UTC = PST + 8
+  var today = new Date()
+  obj.votingOpen = obj.endDate > today && obj.startDate < today
   obj.cover = "/img/mixcontest.jpg" 
 
   var choices = []
@@ -98,6 +100,8 @@ function createPoll (e, el) {
     data: {
       question: data.question,
       choices: choices,
+      maxChoices: data.maxChoices,
+      minChoices: data.minChoices,
       multiChoice: data.multiChoice || false,
       multiVote: data.multiVote || false
     },
