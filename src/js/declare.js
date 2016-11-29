@@ -516,6 +516,9 @@ function getDataSetTargetElement (el) {
     return null
   }
   var target = el.getAttribute('data-set-target')
+  if(!target && el.getAttribute('data-set')) {
+    return el
+  }
   return document.querySelector('[data-set="' + target + '"]')
 }
 

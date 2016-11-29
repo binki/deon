@@ -14,7 +14,7 @@
         </div>
         {{/buying}}        
         <div class="flex sign-split">
-            <form onsubmit="false" data-set-target="credentials" data-set="credentials" data-submit-action="signIn" class="col-xs-12 col-md-6 panel">
+            <form onsubmit="false" data-set="credentials" data-submit-action="signIn" class="col-xs-12 col-md-6 panel">
                 <h2>With Email</h2>
                 <table class="form mobile">
                     <tbody>
@@ -233,49 +233,51 @@
         <div class="flex sign-split">
             <div class="col-xs-12 col-md-6 panel">
                 <h2>With Email</h2>
-                <table class="form mobile" data-set="credentials" trigger-target="signUp">
-                    <tbody>
-                        <tr>
-                            <th>Email</th>
-                            <td>
-                                <input type="text"
-                                       name="email"
-                                       placeholder="kitty@monstercat.com"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Password</th>
-                            <td>
-                                <input type="password"
-                                       name="password"
-                                       placeholder="a secret"/>
-                                <button
-                                    class="faux password"
-                                    action="togglePassword"
-                                    toggle-target="password">
-                                    <i class="fa fa-eye-slash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Country</th>
-                            <td>
-                                <select name="location">
-                                    <option disabled selected>Select One</option>
-                                    {{#countries}}
-                                    <option value="{{name}}">
-                                        {{name}}
-                                    </option>
-                                    {{/countries}}
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="button-group">
-                    <button class="button--cta button--full" action="signUp" trigger="signUp" data-set-target="credentials">Sign Up</button>
-                    or <a href="/signin?redirect={{redirectTo}}">sign in</a>
-                </div>
+                <form  data-set="credentials" data-submit-action="signUp">
+                    <table class="form mobile">
+                        <tbody>
+                            <tr>
+                                <th>Email</th>
+                                <td>
+                                    <input type="text"
+                                           name="email"
+                                           placeholder="kitty@monstercat.com"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Password</th>
+                                <td>
+                                    <input type="password"
+                                           name="password"
+                                           placeholder="a secret"/>
+                                    <button
+                                        class="faux password"
+                                        action="togglePassword"
+                                        toggle-target="password">
+                                        <i class="fa fa-eye-slash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Country</th>
+                                <td>
+                                    <select name="location">
+                                        <option disabled selected>Select One</option>
+                                        {{#countries}}
+                                        <option value="{{name}}">
+                                            {{name}}
+                                        </option>
+                                        {{/countries}}
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="button-group">
+                        <button class="button--cta button--full">Sign Up</button>
+                        or <a href="/signin?redirect={{redirectTo}}">sign in</a>
+                    </div>
+                </form>
             </div>
             <div class="col-xs-12 col-md-6 panel">
                 <h2>With Social</h2>
